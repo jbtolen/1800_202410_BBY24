@@ -6,8 +6,13 @@ This browser based web application to ...
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
+<<<<<<< HEAD
 * What's up, my name is James! I'm excited to create a web application!
 * ...
+=======
+Hi! I'm Jack and I have previously worked as a technical writer for different organizations!
+Hi! I'm Keith and I'm looking forward to working on this project with the rest of my team members and seeing what comes out of this final product!
+>>>>>>> refs/remotes/origin/main
 * ...
 	
 ## 3. Technologies and Resources Used
