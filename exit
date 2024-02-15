@@ -1,0 +1,62 @@
+[33mcommit 7854f239ea7b8a66c9979c764aedd1a0026403ac[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: fdc1535 636b56e
+Author: James Tolen <jtolen1@my.bcit.ca>
+Date:   Wed Jan 24 12:38:55 2024 -0800
+
+    Merge remote-tracking branch 'refs/remotes/origin/main'
+
+[33mcommit 636b56e1726772847d2ffd7fa05aad0c8b500623[m
+Merge: 9ead2b3 70e71c4
+Author: yaoyang <hakuryu059@gmail.com>
+Date:   Wed Jan 24 12:34:05 2024 -0800
+
+    Conflict on README resolved by Yaoyang
+
+[33mcommit fdc1535fb63de5f33f655c3be79e506489afb29d[m
+Author: James Tolen <jtolen1@my.bcit.ca>
+Date:   Wed Jan 24 12:29:34 2024 -0800
+
+    Conflict on README file resolved by James
+
+[33mcommit 5a0f6eb4337890bf11b9bbe801d7dc175f1ad413[m
+Merge: c3be60b 70e71c4
+Author: James Tolen <jtolen1@my.bcit.ca>
+Date:   Wed Jan 24 12:21:59 2024 -0800
+
+    Conflict on README file resolved by James
+
+[33mcommit 9ead2b3d24cb9608ed38f33fecc9735e9cd32f04[m
+Author: yaoyang <hakuryu059@gmail.com>
+Date:   Wed Jan 24 12:19:02 2024 -0800
+
+    added yaoyang name and bio in Names of Contributors section of the README.md file
+
+[33mcommit c3be60bfab52b612801cbd1a3472fd77f3979033[m
+Author: James Tolen <jtolen1@my.bcit.ca>
+Date:   Wed Jan 24 12:15:38 2024 -0800
+
+    Conflict on README resolved by James
+
+[33mcommit 70e71c47582ebe234ebc8903427a66a69627fb01[m
+Author: kchow148 <kfc071997@hotmail.com>
+Date:   Wed Jan 24 12:14:07 2024 -0800
+
+    Added one line intro to README file for Keith
+
+[33mcommit 9889d027f6637b5034900d677c5674e81fa695d2[m
+Author: James Tolen <jtolen1@my.bcit.ca>
+Date:   Wed Jan 24 12:08:55 2024 -0800
+
+    Added one line to intro to READ file for James
+
+[33mcommit 8992d77d2e13967ec3eed983f1dc68fc8fa8bc27[m
+Author: jseaberry <seaberry.jack@gmail.com>
+Date:   Wed Jan 24 12:08:21 2024 -0800
+
+    added bio for Jack
+
+[33mcommit aef3e6ba367320bfd6c5491cf6a8a041b8a97602[m
+Author: jbtolen <156630697+jbtolen@users.noreply.github.com>
+Date:   Wed Jan 24 12:00:18 2024 -0800
+
+    Initial commit
