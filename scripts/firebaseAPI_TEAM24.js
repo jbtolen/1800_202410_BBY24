@@ -1,3 +1,4 @@
+
 const firebaseConfig = {
     apiKey: "AIzaSyCyYAihelFQgwpc_ZjYoFS-M_u_BSGtAPI",
     authDomain: "comp1800-bby24.firebaseapp.com",
@@ -8,4 +9,4 @@ const firebaseConfig = {
   };
   
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  const app = firebase.initializeApp(firebaseConfig);
