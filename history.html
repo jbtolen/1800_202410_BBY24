@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>My BCIT Project</title>
     <meta name="comp1800 template" content="My 1800 App">
@@ -21,6 +22,7 @@
     <link rel="stylesheet" href="./styles/style.css">
 
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid">
@@ -50,43 +52,48 @@
 
         </div>
 
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4"></p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <div class="dropdown">
-                    <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Add Water
-                    </button> -->
-                    <!-- <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">14oz</a></li>
-                        
-                    </ul> -->
+
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-left pt-3 pb-2 mb-3 border-bottom">
+                <div class="btn-toolbar mb-2 mb-md-0">
                 </div>
             </div>
-        </div>
-    </div>
+
+            <canvas class="my- w-100" id="myChart" width="900" height="380"></canvas>
+
+
+        </main>
 
 
 
 
-    <!-- Your HTML Layout go here -->
-    <!------------------------------>
-    <!-- Stuff for body goes here -->
-    <footer class="navbar justify-content-evenly bg-info fixed-bottom">
-        <div class="container">
-            <span class="material-icons">Go Back</span>
-            <span class="material-icons"></span>
-            <span class="material-icons"></span>
-        </div>
-    </footer>
+        <!-- Your HTML Layout go here -->
+        <!------------------------------>
+        <!-- Stuff for body goes here -->
+        <footer class="navbar justify-content-evenly bg-info fixed-bottom">
+            <div class="container">
+                <span class="material-icons">Go Back</span>
+                <span class="material-icons"></span>
+                <span class="material-icons"></span>
+            </div>
+        </footer>
 
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
-    <script src="./scripts/firebaseAPI_TEAM24.js"></script>
-    <!-- Link to scripts of your own -->
-    <!-- <script src="./scripts/script.js"></script> -->
+        <!---------------------------------------------->
+        <!-- Your own JavaScript functions go here    -->
+        <!---------------------------------------------->
+        <script src="./scripts/firebaseAPI_TEAM24.js"></script>
+        <!-- Link to scripts of your own -->
+        <!-- <script src="./scripts/script.js"></script> -->
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
+            integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
+            crossorigin="anonymous"></script>
+        <script src="scripts/script.js"></script>
+</body>
 
 </body>
+
 </html>
