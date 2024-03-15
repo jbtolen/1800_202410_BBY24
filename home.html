@@ -16,8 +16,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <!-- Other libraries go here -->
 
     <!-- Link to styles of your own -->
@@ -47,6 +52,8 @@
     </nav>
 
     <div class="px-4 py-5 my-5 text-center ">
+        <span id="quote-goes-here"></span>
+
         <h1 class="display-5 fw-bold text-body-emphasis">You drank a total of</h1>
         <h1 class="display-5 fw-bold text-body-emphasis">%</h1>
         <div class="col-lg-6 mx-auto">
@@ -91,6 +98,8 @@
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
     <script src="./scripts/firebaseAPI_TEAM24.js"></script>
+    <script src="./scripts/main.js"></script>
+
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
 
