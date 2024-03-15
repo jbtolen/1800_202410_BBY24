@@ -56,29 +56,4 @@ var uiConfig = {
 
 ui.start('#firebaseui-auth-container', uiConfig);
 
-// Function to add water amount for the current user
-function addWaterAmount(amount) {
-  var user = firebase.auth().currentUser;
-  if (user) {
-      db.collection("water_amounts").add({
-          userId: user.uid,
-          amount: amount,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(function(docRef) {
-          console.log("Water amount added:", docRef.id);
-      }).catch(function(error) {
-          console.error("Error adding water amount: ", error);
-      });
-  } else {
-      console.log("No user signed in.");
-  }
-}
-
-document.getElementById("amount1").addEventListener("click", function() {
-  var amount = parseInt(document.getElementById("amount1").value);
-  if (!isNaN(amount)) {
-      addWaterAmount(amount);
-  } else {
-      console.log("Invalid amount.");
-  }
-});
+// Function to add water amount for the current use

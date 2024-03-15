@@ -12,4 +12,87 @@ function readQuote(day) {
 		       //document.querySelector("#quote-goes-here").innerHTML = dayDoc.data().quote;
       })
 }
-readQuote("half");        //calling the function
+readQuote("none");        //calling the function
+
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", function() {
+    // Get reference to the button
+    var updateCollectionButton = document.getElementById('amount1');
+
+    // Add event listener to the button
+    updateCollectionButton.addEventListener('click', function() {
+        updateCollection();
+    });
+
+    // Get reference to the <h1> element
+    var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+
+    // Fetch the value from Firestore and update the <h1> element
+    fetchTotalAmount()
+    .then(function(totalAmount) {
+        totalAmountDisplay.textContent = "You drank a total of " + totalAmount;
+    })
+    .catch(function(error) {
+        console.error("Error fetching total amount:", error);
+    });
+});
+
+function updateCollection() {
+    var user = firebase.auth().currentUser;
+
+    if (user) {
+        var userId = user.uid;
+        var collectionRef = db.collection("users").doc(userId).collection("your_collection");
+
+        // Update collection data
+        // For example, you can add a new document to the collection
+        collectionRef.add({
+            key: 14 // Add any data you want to update or add to the collection
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            
+            // After updating collection, fetch the total amount and update the display
+            fetchTotalAmount()
+            .then(function(totalAmount) {
+                var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+            })
+            .catch(function(error) {
+                console.error("Error fetching total amount:", error);
+            });
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    } else {
+        console.log("No user signed in.");
+    }
+}
+
+function fetchTotalAmount() {
+    return new Promise(function(resolve, reject) {
+        var user = firebase.auth().currentUser;
+
+        if (user) {
+            var userId = user.uid;
+            var collectionRef = db.collection("users").doc(userId).collection("your_collection");
+
+            // Fetch all documents in the collection
+            collectionRef.get()
+            .then(function(querySnapshot) {
+                var totalAmount = 0;
+                querySnapshot.forEach(function(doc) {
+                    // Sum up the values of all documents
+                    totalAmount += doc.data().key;
+                });
+                resolve(totalAmount);
+            })
+            .catch(function(error) {
+                reject(error);
+            });
+        } else {
+            reject("No user signed in.");
+        }
+    });
+}
