@@ -16,6 +16,16 @@ readQuote("none");        //calling the function
 
 // Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", function() {
+
+    // CHANGES MADE HERE
+    fetchTotalAmount()
+    .then(function(totalAmount) {
+        totalAmountDisplay.textContent = "You drank a total of " + totalAmount;
+    })
+    .catch(function(error) {
+        console.error("Error fetching total amount:", error);
+    });
+
     // Get reference to the button
     var updateCollectionButton = document.getElementById('amount1');
 
