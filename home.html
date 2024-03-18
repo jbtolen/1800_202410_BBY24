@@ -55,12 +55,11 @@
 
         <h1 class="display-5 fw-bold text-body-emphasis">You drank a total of</h1>
         <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4">X amount more to reach your daily goal!</p>
+            <p class="goalNum"></p>
 
         </div>
 
         <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4"></p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                 <div class="dropdown">
                     <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -75,6 +74,21 @@
                 </div>
             </div>
         </div>
+        <br>
+        <form>
+            <div class="container">
+                <form id="inputForm">
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control" id="goalInput">
+                        <span class="input-group-text">oz</span>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                    </div>
+                </form>
+                <div id="displayArea"></div>
+            </div>
+    
     </div>
 
 
