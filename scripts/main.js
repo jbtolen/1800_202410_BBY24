@@ -66,6 +66,8 @@ function updateCollection() {
     });
 }
 
+
+
 function fetchTotalAmount() {
     return new Promise(function(resolve, reject) {
         // var user = firebase.auth().currentUser
