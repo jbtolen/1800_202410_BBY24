@@ -96,6 +96,16 @@ function fetchTotalAmount() {
         });
     });
 }
+
+function displayQuote(day){
+    db.collection("quotes").doc(day)
+        .onSnapshot(dayDoc => {
+            console.log("current document data: " + dayDoc.data());
+            document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
+        })
+}
+displayQuote("tuesday");
+
 document.getElementById("inputForm").addEventListener("submit", function(event) {
 
     var inputElement = document.getElementById("goalInput");
