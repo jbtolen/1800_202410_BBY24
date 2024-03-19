@@ -97,12 +97,8 @@ function fetchTotalAmount() {
     });
 }
 document.getElementById("inputForm").addEventListener("submit", function(event) {
-    // event.preventDefault(); // Prevent the form from submitting and reloading the page
 
-    // Get the input element
     var inputElement = document.getElementById("goalInput");
-    // Get the value of the input
     var inputValue = inputElement.value;
-    // Display the input value
     document.getElementById("displayArea").innerText = "The input number is: " + inputValue;
 });
