@@ -1,21 +1,14 @@
-// Function to read the quote of the day from the Firestore "quotes" collection
-// Input param is the String representing the day of the week, aka, the document name
 
-// Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", function() {
 
-    // run the function once to display the initial amount upon page load
     updateCollection();
     
-    // Get reference to the button
     var updateCollectionButton = document.getElementById('amount1');
 
-    // Add event listener to the button
     updateCollectionButton.addEventListener('click', function() {
         updateCollection();
     });
 
-    // Get reference to the <h1> element
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
 });
 
@@ -31,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
 // }
 
 function updateCollection() {
-    // var user = firebase.auth().currentUser
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -40,14 +32,12 @@ function updateCollection() {
             var collectionRef = db.collection("users").doc(userId).collection("your_collection");
 
             // Update collection data
-            // For example, you can add a new document to the collection
             collectionRef.add({
-                key: 14 // Add any data you want to update or add to the collection
+                key: 14 
             })
             .then(function(docRef) {
                 console.log("Document written with ID: ", docRef.id);
                 
-                // After updating collection, fetch the total amount and update the display
                 fetchTotalAmount()
                 .then(function(totalAmount) {
                     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
@@ -70,14 +60,12 @@ function updateCollection() {
 
 function fetchTotalAmount() {
     return new Promise(function(resolve, reject) {
-        // var user = firebase.auth().currentUser
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 var userId = user.uid;
                 var collectionRef = db.collection("users").doc(userId).collection("your_collection");
 
-                // Fetch all documents in the collection
                 collectionRef.get()
                 .then(function(querySnapshot) {
                     var totalAmount = 0;
