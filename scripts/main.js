@@ -59,8 +59,15 @@ function updateCollection(option) {
             break;
             //option used for just display the result initially
         case 0:
-            keyToAdd = 0;
-            console.log("key = 0");
+            fetchTotalAmount()
+                .then(function(totalAmount) {
+                    var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                    totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                })
+                .catch(function(error) {
+                    console.error("Error fetching total amount:", error);
+                });
+                console.log("get amount upon option 0");
             break;
         default:
             console.error("Invalid option:", option);
@@ -76,7 +83,7 @@ function updateCollection(option) {
             console.log("key to add: " + keyToAdd);
 
             // Update collection data
-            collectionRef.add({
+            collectionRef.update({
                 key: keyToAdd
             })
             .then(function(docRef) {
