@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var updateCollectionButton1 = document.getElementById('amount1');
     var updateCollectionButton2 = document.getElementById('amount2');
     var updateCollectionButton3 = document.getElementById('amount3');
+    var updateCollectionButtonReset = document.getElementById('reset');
 
     // Add event listener to the button
     updateCollectionButton1.addEventListener('click', function() {
@@ -23,6 +24,11 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCollectionButton3.addEventListener('click', function() {
         updateCollection(3);
         console.log("button 3 clicked");
+    });
+
+    updateCollectionButtonReset.addEventListener('click', function(){
+        updateCollection(4);
+        console.log("button reset clicked");
     });
 
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
@@ -50,12 +56,15 @@ function updateCollection(option) {
             console.log("key changed to 14");
             break;
         case 2:
-            keyToAdd = 23;
+            keyToAdd = 22;
             console.log("key changed to 23");
             break;
         case 3:
             keyToAdd = 32;
             console.log("key changed to 32");
+            break;
+        case 4:
+            console.log("key reset to 0");
             break;
             //option used for just display the result initially
         case 0:
