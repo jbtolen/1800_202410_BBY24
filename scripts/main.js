@@ -40,27 +40,26 @@ document.addEventListener("DOMContentLoaded", function() {
 // }
 
 function updateCollection(option) {
-    // var user = firebase.auth().currentUser
     var keyToAdd;
-    console.log("entered updateCollection function");
+    console.log("Entered updateCollection function");
 
     switch (option) {
         case 1:
             keyToAdd = 14;
-            console.log("key changed to 14");
+            console.log("Key changed to 14");
             break;
         case 2:
             keyToAdd = 23;
-            console.log("key changed to 23");
+            console.log("Key changed to 23");
             break;
         case 3:
             keyToAdd = 32;
-            console.log("key changed to 32");
+            console.log("Key changed to 32");
             break;
-            //option used for just display the result initially
+        // Option used for just displaying the result initially
         case 0:
             keyToAdd = 0;
-            console.log("key = 0");
+            console.log("Key = 0");
             break;
         default:
             console.error("Invalid option:", option);
@@ -69,36 +68,72 @@ function updateCollection(option) {
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log("user logged in");
+            console.log("User logged in");
             var userId = user.uid;
-            var collectionRef = db.collection("users").doc(userId).collection("your_collection");
+            var docRef = db.collection("users").doc(userId).collection("your_collection").doc("document_id");
 
-            console.log("key to add: " + keyToAdd);
+            // Get the existing value from Firestore
+            docRef.get()
+            .then(function(doc) {
+                if (doc.exists) {
+                    // If the document exists, update the value by adding the new keyToAdd value to it
+                    var currentValue = doc.data().key || 0; // If the key doesn't exist, default to 0
+                    var updatedValue = currentValue + keyToAdd;
 
-            // Update collection data
-            collectionRef.add({
-                key: keyToAdd
-            })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-                
-                fetchTotalAmount()
-                .then(function(totalAmount) {
-                    var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-                    totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
-                })
-                .catch(function(error) {
-                    console.error("Error fetching total amount:", error);
-                });
+                    console.log("Existing value:", currentValue);
+                    console.log("New value:", updatedValue);
+
+                    // Update document data
+                    docRef.set({
+                        key: updatedValue
+                    }, { merge: true }) // merge option ensures that existing data isn't overwritten
+                    .then(function() {
+                        console.log("Document updated successfully");
+                        
+                        fetchTotalAmount()
+                        .then(function(totalAmount) {
+                            var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                            totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                        })
+                        .catch(function(error) {
+                            console.error("Error fetching total amount:", error);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error("Error updating document: ", error);
+                    });
+                } else {
+                    console.log("Document does not exist, creating a new one.");
+                    // If the document doesn't exist, create a new one with the provided keyToAdd value
+                    docRef.set({
+                        key: keyToAdd
+                    })
+                    .then(function() {
+                        console.log("Document created successfully");
+                        
+                        fetchTotalAmount()
+                        .then(function(totalAmount) {
+                            var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                            totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                        })
+                        .catch(function(error) {
+                            console.error("Error fetching total amount:", error);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error("Error creating document: ", error);
+                    });
+                }
             })
             .catch(function(error) {
-                console.error("Error adding document: ", error);
+                console.error("Error getting document:", error);
             });
         } else {
             console.log("No user signed in.");
         }
     });
 }
+
 
 
 
