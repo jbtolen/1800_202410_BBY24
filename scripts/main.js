@@ -1,12 +1,28 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    updateCollection();
-    
-    var updateCollectionButton = document.getElementById('amount1');
+    // run the function once to display the initial amount upon page load
+    // need to somehow have code here that retrives and display user current drank amount
 
-    updateCollectionButton.addEventListener('click', function() {
-        updateCollection();
+    updateCollection(0);
+    
+    // Get reference to the button
+    var updateCollectionButton1 = document.getElementById('amount1');
+    var updateCollectionButton2 = document.getElementById('amount2');
+    var updateCollectionButton3 = document.getElementById('amount3');
+
+    // Add event listener to the button
+    updateCollectionButton1.addEventListener('click', function() {
+        updateCollection(1);
+        console.log("button 1 clicked");
+    });
+    updateCollectionButton2.addEventListener('click', function() {
+        updateCollection(2);
+        console.log("button 2 clicked");
+    });
+    updateCollectionButton3.addEventListener('click', function() {
+        updateCollection(3);
+        console.log("button 3 clicked");
     });
 
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
@@ -23,7 +39,33 @@ document.addEventListener("DOMContentLoaded", function() {
 //     });
 // }
 
-function updateCollection() {
+function updateCollection(option) {
+    // var user = firebase.auth().currentUser
+    var keyToAdd;
+    console.log("entered updateCollection function");
+
+    switch (option) {
+        case 1:
+            keyToAdd = 14;
+            console.log("key changed to 14");
+            break;
+        case 2:
+            keyToAdd = 23;
+            console.log("key changed to 23");
+            break;
+        case 3:
+            keyToAdd = 32;
+            console.log("key changed to 32");
+            break;
+            //option used for just display the result initially
+        case 0:
+            keyToAdd = 0;
+            console.log("key = 0");
+            break;
+        default:
+            console.error("Invalid option:", option);
+            return; // Exit the function if the option is invalid
+    }
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -31,9 +73,11 @@ function updateCollection() {
             var userId = user.uid;
             var collectionRef = db.collection("users").doc(userId).collection("your_collection");
 
+            console.log("key to add: " + keyToAdd);
+
             // Update collection data
             collectionRef.add({
-                key: 14 
+                key: keyToAdd
             })
             .then(function(docRef) {
                 console.log("Document written with ID: ", docRef.id);
