@@ -82,7 +82,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         console.log("User logged in");
         var userId = user.uid;
-        // Returns the string of the date
+        // Returns the string of the date and puts the format in YYYY-MM-DDTHH
         var currentDate = new Date().toISOString().split('T')[0]; // Get current date
         var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate);
 
