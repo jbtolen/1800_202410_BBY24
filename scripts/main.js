@@ -76,46 +76,17 @@ function updateCollection(option) {
             return; // Exit the function if the option is invalid
     }
 
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //     if (user) {
-    //         console.log("user logged in");
-    //         var userId = user.uid;
-    //         var collectionRef = db.collection("users").doc(userId).collection("your_collection");
 
-    //         console.log("key to add: " + keyToAdd);
-
-    //         // Update collection data
-    //         collectionRef.add({
-    //             key: keyToAdd
-    //         })
-    //         .then(function(docRef) {
-    //             console.log("Document written with ID: ", docRef.id);
-                
-    //             fetchTotalAmount()
-    //             .then(function(totalAmount) {   
-    //                 var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-    //                 totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
-    //             })
-    //             .catch(function(error) {
-    //                 console.error("Error fetching total amount:", error);
-    //             });
-    //         })
-    //         .catch(function(error) {
-    //             console.error("Error adding document: ", error);
-    //         });
-    //     } else {
-    //         console.log("No user signed in.");
-    //     }
-    // });
-
+//saves data to one document
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log("User logged in");
             var userId = user.uid;
-            var docRef = db.collection("users").doc(userId).collection("your_collection").doc("document_id");
+            var collectionRef = db.collection("users").doc(userId).collection("your_collection");
 
+            var currentDate = new Date().toISOString().split('T')[0];
             // Get the existing value from Firestore
-            docRef.get()
+            collectionRef.doc(currentDate).get()
             .then(function(doc) {
                 if (doc.exists) {
                     // If the document exists, update the value by adding the new keyToAdd value to it
@@ -126,7 +97,7 @@ function updateCollection(option) {
                     console.log("New value:", updatedValue);
 
                     // Update document data
-                    docRef.set({
+                    collectionRef.set({
                         key: updatedValue
                     }, { merge: true }) // merge option ensures that existing data isn't overwritten
                     .then(function() {
@@ -145,14 +116,13 @@ function updateCollection(option) {
                         console.error("Error updating document: ", error);
                     });
                 } else {
-                    console.log("Document does not exist, creating a new one.");
                     // If the document doesn't exist, create a new one with the provided keyToAdd value
-                    docRef.set({
+                    collectionRef.doc(currentDate).set({
                         key: keyToAdd
                     })
                     .then(function() {
                         console.log("Document created successfully");
-                        
+
                         fetchTotalAmount()
                         .then(function(totalAmount) {
                             var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
@@ -207,12 +177,12 @@ function fetchTotalAmount() {
     });
 }
 
-function displayQuote(day){
-    db.collection("quotes").doc(day)
-        .onSnapshot(dayDoc => {
-            console.log("current document data: " + dayDoc.data());
-            document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
-        })
-}
-displayQuote("tuesday");
+// function displayQuote(day){
+//     db.collection("quotes").doc(day)
+//         .onSnapshot(dayDoc => {
+//             console.log("current document data: " + dayDoc.data());
+//             document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
+//         })
+// }
+// displayQuote("tuesday");
 
