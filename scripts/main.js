@@ -32,7 +32,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+    var userGoal = fetchUserGoal();
+    if (userGoal) {
+        totalAmountDisplay.textContent += " / Goal: " + userGoal + "oz";
+    }
+
 });
+
+
 
 // function logInUponPageLoad() {
 //     firebase.auth().onAuthStateChanged(function(user) {
@@ -45,10 +52,13 @@ document.addEventListener("DOMContentLoaded", function() {
 //     });
 // }
 
-function updateCollection(option) {
+function updateCollection(option, currentUser) {
     // var user = firebase.auth().currentUser
     var keyToAdd;
     console.log("entered updateCollection function");
+
+    var userGoal = fetchUserGoal();
+
 
     switch (option) {
         case 1:
@@ -85,7 +95,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         // Returns the string of the date and puts the format in YYYY-MM-DDTHH
         var currentDate = new Date().toISOString().split('T')[0]; // Get current date
         var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate);
-
+ 
         // Check if the document for the current date exists
         docRef.get()
         .then(function(doc) {
@@ -106,7 +116,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                     fetchTotalAmount()
                     .then(function(totalAmount) {
                         var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz" + "/";
                     })
                     .catch(function(error) {
                         console.error("Error fetching total amount:", error);
@@ -176,13 +186,13 @@ function fetchTotalAmount() {
     });
 }
 
-function displayQuote(day){
-    db.collection("quotes").doc(day)
-        .onSnapshot(dayDoc => {
-            console.log("current document data: " + dayDoc.data());
-            document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
-        })
-}
+// function displayQuote(day){
+//     db.collection("quotes").doc(day)
+//         .onSnapshot(dayDoc => {
+//             console.log("current document data: " + dayDoc.data());
+//             document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
+//         })
+// }
 displayQuote("tuesday");
 
 document.getElementById("inputForm").addEventListener("submit", function(event) {
@@ -191,3 +201,21 @@ document.getElementById("inputForm").addEventListener("submit", function(event) 
     var inputValue = inputElement.value;
     document.getElementById("displayArea").innerText = "The input number is: " + inputValue;
 });
+
+function fetchUserGoal() {
+    var user = firebase.auth().currentUser;
+    if (user) {
+        var userId = user.uid;
+        var userDoc = db.collection("users").doc(userId);
+        var doc = userDoc.get();
+        if (doc.exists) {
+            return doc.data().goal;
+        } else {
+            console.error("User document not found");
+            return null;
+        }
+    } else {
+        console.error("No user signed in.");
+        return null;
+    }
+}
