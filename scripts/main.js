@@ -1,130 +1,296 @@
-function getNameFromAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            console.log("user is logged in")
-            console.log(user.displayName)
 
-            document.getElementById("name-goes-here").innerHTML = user.displayName;
+document.addEventListener("DOMContentLoaded", function() {
 
-        } else {
-            console.log("user is NOT logged in")
-        }
+    // run the function once to display the initial amount upon page load
+    // need to somehow have code here that retrives and display user current drank amount
 
-    })
-}
-getNameFromAuth()
+    updateCollection(0);
+    
+    // Get reference to the button
+    var updateCollectionButton1 = document.getElementById('amount1');
+    var updateCollectionButton2 = document.getElementById('amount2');
+    var updateCollectionButton3 = document.getElementById('amount3');
+    var updateCollectionButtonReset = document.getElementById('reset');
 
-function insertNameFromFirestore() {
-    // Check if the user is logged in:
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            console.log(user.uid); // Let's know who the logged-in user is by logging their UID
-            currentUser = db.collection("users").doc(user.uid); // Go to the Firestore document of the user
-            currentUser.get().then(userDoc => {
-                // Get the user name
-                let userName = userDoc.data().name;
-                console.log(userName);
-                //$("#name-goes-here").text(userName); // jQuery
-                document.getElementById("name-goes-here").innerText = userName;
-            })
-        } else {
-            console.log("No user is logged in."); // Log a message when no user is logged in
-        }
-    })
-}
-
-insertNameFromFirestore();
-
-
-function readQuote(day) {
-    db.collection("quotes").doc(day).onSnapshot(dayDocument => {
-        quoteOfDay = dayDocument.data().quote;
-        document.getElementById("quote-goes-here").innerHTML = quoteOfDay;
-    })
-}
-
-readQuote("tuesday")
-
-function writeHikes() {
-    //define a variable for the collection you want to create in Firestore to populate data
-    var hikesRef = db.collection("hikes");
-
-    hikesRef.add({
-        code: "BBY01",
-        name: "Burnaby Lake Park Trail", //replace with your own city?
-        city: "Burnaby",
-        province: "BC",
-        level: "easy",
-        details: "A lovely place for lunch walk",
-        length: 10,          //number value
-        hike_time: 60,       //number value
-        lat: 49.2467097082573,
-        lng: -122.9187029619698,
-        last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
+    // Add event listener to the button
+    updateCollectionButton1.addEventListener('click', function() {
+        updateCollection(1);
+        console.log("button 1 clicked");
     });
-    hikesRef.add({
-        code: "AM01",
-        name: "Buntzen Lake Trail", //replace with your own city?
-        city: "Anmore",
-        province: "BC",
-        level: "moderate",
-        details: "Close to town, and relaxing",
-        length: 10.5,      //number value
-        hike_time: 80,     //number value
-        lat: 49.3399431028579,
-        lng: -122.85908496766939,
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("March 10, 2022"))
+    updateCollectionButton2.addEventListener('click', function() {
+        updateCollection(2);
+        console.log("button 2 clicked");
     });
-    hikesRef.add({
-        code: "NV01",
-        name: "Mount Seymour Trail", //replace with your own city?
-        city: "North Vancouver",
-        province: "BC",
-        level: "hard",
-        details: "Amazing ski slope views",
-        length: 8.2,        //number value
-        hike_time: 120,     //number value
-        lat: 49.38847101455571,
-        lng: -122.94092543551031,
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    updateCollectionButton3.addEventListener('click', function() {
+        updateCollection(3);
+        console.log("button 3 clicked");
     });
-}
 
-//------------------------------------------------------------------------------
-// Input parameter is a string representing the collection we are reading from
-//------------------------------------------------------------------------------
-function displayCardsDynamically(collection) {
-    let cardTemplate = document.getElementById("hikeCardTemplate"); // Retrieve the HTML element with the ID "hikeCardTemplate" and store it in the cardTemplate variable. 
+    updateCollectionButtonReset.addEventListener('click', function(){
+        updateCollection(4);
+        console.log("button reset clicked");
+    });
 
-    db.collection(collection).get()   //the collection called "hikes"
-        .then(allHikes => {
-            //var i = 1;  //Optional: if you want to have a unique ID for each hike
-            allHikes.forEach(doc => { //iterate thru each doc
-                var title = doc.data().name;       // get value of the "name" key
-                var details = doc.data().details;  // get value of the "details" key
-                var hikeCode = doc.data().code;    //get unique ID to each hike to be used for fetching right image
-                var hikeLength = doc.data().length; //gets the length field
-                var docID = doc.id;
-                let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+    var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+});
 
-                //update title and text and image
-                newcard.querySelector('.card-title').innerHTML = title;
-                newcard.querySelector('.card-length').innerHTML = hikeLength + "km";
-                newcard.querySelector('.card-text').innerHTML = details;
-                newcard.querySelector('.card-image').src = `./images/${hikeCode}.jpg`; //Example: NV01.jpg
-                newcard.querySelector('a').href = "eachHike.html?docID="+docID;
-                
-                //Optional: give unique ids to all elements for future use
-                // newcard.querySelector('.card-title').setAttribute("id", "ctitle" + i);
-                // newcard.querySelector('.card-text').setAttribute("id", "ctext" + i);
-                // newcard.querySelector('.card-image').setAttribute("id", "cimage" + i);
+// function logInUponPageLoad() {
+//     firebase.auth().onAuthStateChanged(function(user) {
+//         if (user) {
+//             console.log("User signed in:", user);
+//             return user;
+//         } else {
+//             console.log("No user signed in.");
+//         }
+//     });
+// }
 
-                //attach to gallery, Example: "hikes-go-here"
-                document.getElementById(collection + "-go-here").appendChild(newcard);
+function updateCollection(option) {
+    // var user = firebase.auth().currentUser
+    var keyToAdd;
+    console.log("entered updateCollection function");
 
-                //i++;   //Optional: iterate variable to serve as unique ID
-            })
+    switch (option) {
+        case 1:
+            keyToAdd = 14;
+            console.log("key changed to 14");
+            break;
+        case 2:
+            keyToAdd = 22;
+            console.log("key changed to 23");
+            break;
+        case 3:
+            keyToAdd = 32;
+            console.log("key changed to 32");
+            break;
+        case 4:
+            console.log("key reset to 0");
+            break;
+            //option used for just display the result initially
+        case 0:
+            keyToAdd = 0;
+            console.log("key = 0");
+            break;
+        default:
+            console.error("Invalid option:", option);
+            return; // Exit the function if the option is invalid
+    }
+
+
+//saves data to one document
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        console.log("User logged in");
+        var userId = user.uid;
+        // Returns the string of the date
+        var currentDate = new Date().toISOString().split('T')[0]; // Get current date
+        var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate);
+
+        // Check if the document for the current date exists
+        docRef.get()
+        .then(function(doc) {
+            if (doc.exists) {
+                var currentValue = doc.data().key || 0;
+                var updatedValue = currentValue + keyToAdd;
+
+                console.log("Existing value:", currentValue);
+                console.log("New value:", updatedValue);
+
+                // Update document data
+                docRef.update({
+                    key: updatedValue
+                })
+                .then(function() {
+                    console.log("Document updated successfully");
+                    
+                    fetchTotalAmount()
+                    .then(function(totalAmount) {
+                        var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                    })
+                    .catch(function(error) {
+                        console.error("Error fetching total amount:", error);
+                    });
+                })
+                .catch(function(error) {
+                    console.error("Error updating document: ", error);
+                });
+            } else {
+                // If the document doesn't exist, create a new one with the provided keyToAdd value
+                docRef.set({
+                    key: keyToAdd
+                })
+                .then(function() {
+                    console.log("Document created successfully");
+
+                    fetchTotalAmount()
+                    .then(function(totalAmount) {
+                        var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                    })
+                    .catch(function(error) {
+                        console.error("Error fetching total amount:", error);
+                    });
+                })
+                .catch(function(error) {
+                    console.error("Error creating document: ", error);
+                });
+            }
         })
+        .catch(function(error) {
+            console.error("Error getting document:", error);
+        });
+    } else {
+        console.log("No user signed in.");
+    }
+});
+
 }
 
-displayCardsDynamically("hikes");  //input param is the name of the collection
+function fetchGoal() {
+    return new Promise(function(resolve, reject) {
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var userId = user.uid;
+                var collectionRef = db.collection("users").doc(userId).collection("your_collection");
+
+                collectionRef.get()
+                .then(function(querySnapshot) {
+                    var totalAmount = 0;
+                    querySnapshot.forEach(function(doc) {
+                        // Sum up the values of all documents
+                        totalAmount += doc.data().key;
+                    });
+                    resolve(totalAmount);
+                })
+                .catch(function(error) {
+                    reject(error);
+                });
+            } else {
+                reject("No user signed in.");
+            }
+        });
+    });
+}
+
+function fetchTotalAmount() {
+    return new Promise(function(resolve, reject) {
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var userId = user.uid;
+                var collectionRef = db.collection("users").doc(userId).collection("your_collection").doc(currentGoal);
+
+                collectionRef.get()
+                .then(function(querySnapshot) {
+                    var goal = collectionRef.data.currentGoal;
+                    resolve(goal);
+                })
+                .catch(function(error) {
+                    reject(error);
+                });
+            } else {
+                reject("No user signed in.");
+            }
+        });
+    });
+}
+
+// function displayQuote(day){
+//     db.collection("quotes").doc(day)
+//         .onSnapshot(dayDoc => {
+//             console.log("current document data: " + dayDoc.data());
+//             document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
+//         })
+// }
+// displayQuote("tuesday");
+
+const goalInput = document.querySelector('.goal-div input'); // Select the input element
+const goalNum = document.querySelector('#goalNum'); // Select the element to display the goal
+
+const setGoalButton = document.getElementById('set-goal-button'); // Select the button
+
+setGoalButton.addEventListener('click', () => {
+    const goalValue = goalInput.value; // Get the value entered by the user
+
+//   fetchTotalAmount()
+//     .then(function(totalAmount) {
+//         if (!isNaN(goalValue)) {
+//             goalNum.innerHTML = `<p>${totalAmount}/${goalValue}</p>`; // Update the displayed goal with the entered value
+//             goalInput.value = ''; // Clear the input box
+//             var collectionGoalRef = db.collection("users").doc(userId).collection("your_collection");
+//           } else {
+//             alert('Please enter a valid number for your goal!'); // Alert the user if they enter something other than a number
+//           }
+//     })
+//     .catch(function(error) {
+//         console.error("Error fetching total amount:", error);
+//     });
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log("User logged in (set goal portion)");
+            var userId = user.uid;
+            var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentGoal);
+
+            // Check if the document for the current goal exists
+            docRef.get()
+            .then(function(doc) {
+                if (doc.exists) {
+                    var currentValue = doc.data().currentGoal || 0;
+                    var updatedValue = goalValue;
+
+                    console.log("Existing value:", currentValue);
+                    console.log("New value:", updatedValue);
+
+                    // Update document data
+                    docRef.update({
+                        key: updatedValue
+                    })
+                    .then(function() {
+                        console.log("Document updated successfully");
+                        
+                        fetchGoal()
+                        .then(function(goal) {
+                            
+                        })
+                        .catch(function(error) {
+                            console.error("Error fetching goal:", error);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error("Error updating document: ", error);
+                    });
+                } else {
+                    // If the document doesn't exist, create a new one with the provided keyToAdd value
+                    docRef.set({
+                        currentGoal: goalValue
+                    })
+                    .then(function() {
+                        console.log("Document created successfully");
+
+                        fetchGoal()
+                        .then(function(goal) {
+                            
+                        })
+                        .catch(function(error) {
+                            console.error("Error fetching goal:", error);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error("Error creating document: ", error);
+                    });
+                }
+            })
+            .catch(function(error) {
+                console.error("Error getting document:", error);
+            });
+        } else {
+            console.log("No user signed in.");
+        }
+    });
+
+    // Check if the user entered a number
+  
+});

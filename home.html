@@ -31,7 +31,8 @@
 </head>
 
 <body>
-    <nav id="navbar"></nav>
+
+
 
     <div class="px-4 py-5 my-5 text-center ">
 
@@ -52,40 +53,37 @@
                     <button type="button" class="btn btn-primary" id="amount2">Add 22oz</button>
                     <button type="button" class="btn btn-primary" id="amount3">Add 32oz</button>
                     <button type="button" class="btn btn-primary" id="reset">Reset</button>
-
                 </div>
+
+                <!-- goal div location can be changed if it looks like shit -->
+            </div>
+
+            <div class="goal-div">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Enter Goal</span>
+                    <input type="text" class="form-control" placeholder="Goal" aria-label="Goal" aria-describedby="basic-addon1">
+                </div>
+
+                <button type="button" class="btn btn-danger" id="set-goal-button">Set Goal</button>
+
+                <h2 id="goalNum"></h2>
             </div>
         </div>
         <br>
-        <form>
-            <div class="container">
-                <form id="inputForm">
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" id="goalInput">
-                        <span class="input-group-text">oz</span>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Submit form</button>
-                    </div>
-                </form>
-                <div id="displayArea"></div>
-            </div>
+
     
     </div>
 
 
 
+    <nav id="navbar"></nav>
 
     <!-- Your HTML Layout go here -->
     <!------------------------------>
     <!-- Stuff for body goes here -->
-    <footer class="navbar justify-content-evenly bg-info fixed-bottom">
-        <div class="container">
-            <span class="material-icons">Go Back</span>
-            <span class="material-icons"></span>
-            <span class="material-icons"></span>
-        </div>
-    </footer>
+
+    
+    
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
