@@ -76,75 +76,37 @@ function updateCollection(option) {
             return; // Exit the function if the option is invalid
     }
 
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log("user logged in");
+            var userId = user.uid;
+            var collectionRef = db.collection("users").doc(userId).collection("your_collection");
 
-//saves data to one document
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        console.log("User logged in");
-        var userId = user.uid;
-        // Returns the string of the date
-        var currentDate = new Date().toISOString().split('T')[0]; // Get current date
-        var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate);
+            console.log("key to add: " + keyToAdd);
 
-        // Check if the document for the current date exists
-        docRef.get()
-        .then(function(doc) {
-            if (doc.exists) {
-                var currentValue = doc.data().key || 0;
-                var updatedValue = currentValue + keyToAdd;
-
-                console.log("Existing value:", currentValue);
-                console.log("New value:", updatedValue);
-
-                // Update document data
-                docRef.update({
-                    key: updatedValue
-                })
-                .then(function() {
-                    console.log("Document updated successfully");
-                    
-                    fetchTotalAmount()
-                    .then(function(totalAmount) {
-                        var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
-                    })
-                    .catch(function(error) {
-                        console.error("Error fetching total amount:", error);
-                    });
+            // Update collection data
+            collectionRef.add({
+                key: keyToAdd
+            })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                
+                fetchTotalAmount()
+                .then(function(totalAmount) {
+                    var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                    totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
                 })
                 .catch(function(error) {
-                    console.error("Error updating document: ", error);
+                    console.error("Error fetching total amount:", error);
                 });
-            } else {
-                // If the document doesn't exist, create a new one with the provided keyToAdd value
-                docRef.set({
-                    key: keyToAdd
-                })
-                .then(function() {
-                    console.log("Document created successfully");
-
-                    fetchTotalAmount()
-                    .then(function(totalAmount) {
-                        var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
-                    })
-                    .catch(function(error) {
-                        console.error("Error fetching total amount:", error);
-                    });
-                })
-                .catch(function(error) {
-                    console.error("Error creating document: ", error);
-                });
-            }
-        })
-        .catch(function(error) {
-            console.error("Error getting document:", error);
-        });
-    } else {
-        console.log("No user signed in.");
-    }
-});
-
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+        } else {
+            console.log("No user signed in.");
+        }
+    });
 }
 
 
@@ -176,12 +138,18 @@ function fetchTotalAmount() {
     });
 }
 
-// function displayQuote(day){
-//     db.collection("quotes").doc(day)
-//         .onSnapshot(dayDoc => {
-//             console.log("current document data: " + dayDoc.data());
-//             document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
-//         })
-// }
-// displayQuote("tuesday");
+function displayQuote(day){
+    db.collection("quotes").doc(day)
+        .onSnapshot(dayDoc => {
+            console.log("current document data: " + dayDoc.data());
+            document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
+        })
+}
+displayQuote("tuesday");
 
+document.getElementById("inputForm").addEventListener("submit", function(event) {
+
+    var inputElement = document.getElementById("goalInput");
+    var inputValue = inputElement.value;
+    document.getElementById("displayArea").innerText = "The input number is: " + inputValue;
+});
