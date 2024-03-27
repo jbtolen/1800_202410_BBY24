@@ -77,78 +77,111 @@ function updateCollection(option) {
     }
 
 
-//saves data to one document
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        console.log("User logged in");
-        var userId = user.uid;
-        // Returns the string of the date
-        var currentDate = new Date().toISOString().split('T')[0]; // Get current date
-        var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate);
+    //saves data to one document
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log("User logged in");
+            var userId = user.uid;
+            // Returns the string of the date
+            var currentDate = new Date().toISOString().split('T')[0]; // Get current date
+            var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate);
 
-        // Check if the document for the current date exists
-        docRef.get()
-        .then(function(doc) {
-            if (doc.exists) {
-                var currentValue = doc.data().key || 0;
-                var updatedValue = currentValue + keyToAdd;
+            // Check if the document for the current date exists
+            docRef.get()
+            .then(function(doc) {
+                if (doc.exists) {
+                    var currentValue = doc.data().key || 0;
+                    var updatedValue = currentValue + keyToAdd;
 
-                console.log("Existing value:", currentValue);
-                console.log("New value:", updatedValue);
+                    console.log("Existing value:", currentValue);
+                    console.log("New value:", updatedValue);
 
-                // Update document data
-                docRef.update({
-                    key: updatedValue
-                })
-                .then(function() {
-                    console.log("Document updated successfully");
-                    
-                    fetchTotalAmount()
-                    .then(function(totalAmount) {
-                        console.log("tot amount"+totalAmount);
-                        var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                    // Update document data
+                    docRef.update({
+                        key: updatedValue
+                    }).then(function() {
+                        console.log("Document updated successfully");
+                        
+                        fetchTotalAmount().then(function(totalAmount) {
+                            var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                            totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                        }).catch(function(error) {
+                            console.error("Error fetching total amount:", error);
+                        });
+                    }).catch(function(error) {
+                        console.error("Error updating document: ", error);
+                    });
+                } else {
+                    // If the document doesn't exist, create a new one with the provided keyToAdd value
+                    docRef.set({
+                        key: keyToAdd
+                    })
+                    .then(function() {
+                        console.log("Document created successfully");
+
+                        fetchTotalAmount()
+                        .then(function(totalAmount) {
+                            var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+                            totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                        })
+                        .catch(function(error) {
+                            console.error("Error fetching total amount:", error);
+                        });
                     })
                     .catch(function(error) {
-                        console.error("Error fetching total amount:", error);
+                        console.error("Error creating document: ", error);
                     });
-                })
-                .catch(function(error) {
-                    console.error("Error updating document: ", error);
-                });
-            } else {
-                // If the document doesn't exist, create a new one with the provided keyToAdd value
-                docRef.set({
-                    key: keyToAdd
-                })
-                .then(function() {
-                    console.log("Document created successfully");
-
-                    fetchTotalAmount()
-                    .then(function(totalAmount) {
-                        var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
-                    })
-                    .catch(function(error) {
-                        console.error("Error fetching total amount:", error);
-                    });
-                })
-                .catch(function(error) {
-                    console.error("Error creating document: ", error);
-                });
-            }
-        })
-        .catch(function(error) {
-            console.error("Error getting document:", error);
-        });
-    } else {
-        console.log("No user signed in.");
-    }
-});
+                }
+            }).catch(function(error) {
+                console.error("Error getting document:", error);
+            });
+        } else {
+            console.log("No user signed in.");
+        }
+    });
 
 }
 
 function fetchGoal() {
+    return new Promise(function(resolve, reject) {
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var userId = user.uid;
+                var collectionRef = db.collection("users").doc(userId).collection("your_collection");
+
+                // .then(function(querySnapshot) {
+                //     var totalAmount = 0;
+                //     querySnapshot.forEach(function(doc) {
+                //         // Sum up the values of all documents
+                //         totalAmount += doc.data().key;
+                //     });
+                //     resolve(totalAmount);
+                // })
+
+                collectionRef.get()
+                .then(function(querySnapshot) {
+                    var goal = 0;
+                    querySnapshot.forEach(function(doc) { 
+                        goal = doc.data().currentGoal;
+                    })
+                    resolve(goal);
+                })
+                .catch(function(error) {
+                    reject(error);
+                });
+            } else {
+                reject("No user signed in.");
+            }
+        });
+    });
+}
+
+/**
+ * 
+ * @returns 
+ */
+function fetchTotalAmount() {
     return new Promise(function(resolve, reject) {
 
         firebase.auth().onAuthStateChanged(function(user) {
@@ -161,8 +194,10 @@ function fetchGoal() {
                     var totalAmount = 0;
                     querySnapshot.forEach(function(doc) {
                         // Sum up the values of all documents
+                        console.log("Key:" + doc.data().key);
                         totalAmount += doc.data().key;
                     });
+                    console.log(totalAmount);
                     resolve(totalAmount);
                 })
                 .catch(function(error) {
@@ -174,32 +209,7 @@ function fetchGoal() {
         });
     });
 }
-function fetchTotalAmount() {
-    
 
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                var userId = user.uid;
-                var collectionRef = db.collection("users").doc(userId).collection("your_collection");
-
-                collectionRef.get()
-                .then(function(querySnapshot) {
-                    var totalAmount = 0;
-                    querySnapshot.forEach(function(doc) {
-                        // Sum up the values of all documents
-                        totalAmount += doc.data().key;
-                    });
-                    resolve(totalAmount);
-                })
-                .catch(function(error) {
-                    reject(error);
-                });
-            } else {
-                reject("No user signed in.");
-            }
-        });
-
-}
 // function displayQuote(day){
 //     db.collection("quotes").doc(day)
 //         .onSnapshot(dayDoc => {
@@ -216,26 +226,13 @@ const setGoalButton = document.getElementById('set-goal-button'); // Select the 
 
 setGoalButton.addEventListener('click', () => {
     const goalValue = goalInput.value; // Get the value entered by the user
-
-//   fetchTotalAmount()
-//     .then(function(totalAmount) {
-//         if (!isNaN(goalValue)) {
-//             goalNum.innerHTML = `<p>${totalAmount}/${goalValue}</p>`; // Update the displayed goal with the entered value
-//             goalInput.value = ''; // Clear the input box
-//             var collectionGoalRef = db.collection("users").doc(userId).collection("your_collection");
-//           } else {
-//             alert('Please enter a valid number for your goal!'); // Alert the user if they enter something other than a number
-//           }
-//     })
-//     .catch(function(error) {
-//         console.error("Error fetching total amount:", error);
-//     });
-
+    
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log("User logged in (set goal portion)");
+            var currentGoal = goalValue;
             var userId = user.uid;
-            var docRef = db.collection("users").doc(userId).doc(currentGoal);
+            var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentGoal);
 
             // Check if the document for the current goal exists
             docRef.get()
@@ -249,14 +246,14 @@ setGoalButton.addEventListener('click', () => {
 
                     // Update document data
                     docRef.update({
-                        key: updatedValue
+                        currentGoal: updatedValue
                     })
                     .then(function() {
                         console.log("Document updated successfully");
                         
                         fetchGoal()
                         .then(function(goal) {
-                            
+                            console.log("goal: " + goal);
                         })
                         .catch(function(error) {
                             console.error("Error fetching goal:", error);
@@ -275,7 +272,7 @@ setGoalButton.addEventListener('click', () => {
 
                         fetchGoal()
                         .then(function(goal) {
-                            
+                            console.log("goal: " + goal);
                         })
                         .catch(function(error) {
                             console.error("Error fetching goal:", error);
