@@ -193,14 +193,14 @@ function fetchTotalAmount() {
 //             document.getElementById("daily-quote").innerHTML = dayDoc.data().quote;
 //         })
 // }
-displayQuote("tuesday");
+// displayQuote("tuesday");
 
-document.getElementById("inputForm").addEventListener("submit", function(event) {
+// document.getElementById("inputForm").addEventListener("submit", function(event) {
 
-    var inputElement = document.getElementById("goalInput");
-    var inputValue = inputElement.value;
-    document.getElementById("displayArea").innerText = "The input number is: " + inputValue;
-});
+//     var inputElement = document.getElementById("goalInput");
+//     var inputValue = inputElement.value;
+//     document.getElementById("displayArea").innerText = "The input number is: " + inputValue;
+// });
 
 function fetchUserGoal() {
     var user = firebase.auth().currentUser;
