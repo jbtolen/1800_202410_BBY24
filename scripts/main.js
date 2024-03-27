@@ -32,7 +32,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
+    var userGoal = fetchUserGoal();
+    if (userGoal) {
+        totalAmountDisplay.textContent += " / Goal: " + userGoal + "oz";
+    }
+
 });
+
+
 
 // function logInUponPageLoad() {
 //     firebase.auth().onAuthStateChanged(function(user) {
@@ -45,10 +52,13 @@ document.addEventListener("DOMContentLoaded", function() {
 //     });
 // }
 
-function updateCollection(option) {
+function updateCollection(option, currentUser) {
     // var user = firebase.auth().currentUser
     var keyToAdd;
     console.log("entered updateCollection function");
+
+    var userGoal = fetchUserGoal();
+
 
     switch (option) {
         case 1:
@@ -82,10 +92,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         console.log("User logged in");
         var userId = user.uid;
-        // Returns the string of the date
+        // Returns the string of the date and puts the format in YYYY-MM-DDTHH
         var currentDate = new Date().toISOString().split('T')[0]; // Get current date
         var docRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate);
-
+ 
         // Check if the document for the current date exists
         docRef.get()
         .then(function(doc) {
@@ -107,7 +117,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                     .then(function(totalAmount) {
                         console.log("tot amount"+totalAmount);
                         var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz";
+                        totalAmountDisplay.textContent = "You drank a total of " + totalAmount + "oz" + "/";
                     })
                     .catch(function(error) {
                         console.error("Error fetching total amount:", error);
@@ -174,8 +184,9 @@ function fetchGoal() {
         });
     });
 }
+
 function fetchTotalAmount() {
-    
+    return (function(resolve, reject) {
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
@@ -198,7 +209,7 @@ function fetchTotalAmount() {
                 reject("No user signed in.");
             }
         });
-
+    });
 }
 // function displayQuote(day){
 //     db.collection("quotes").doc(day)
@@ -209,91 +220,27 @@ function fetchTotalAmount() {
 // }
 // displayQuote("tuesday");
 
-const goalInput = document.querySelector('.goal-div input'); // Select the input element
-const goalNum = document.querySelector('#goalNum'); // Select the element to display the goal
+// document.getElementById("inputForm").addEventListener("submit", function(event) {
 
-const setGoalButton = document.getElementById('set-goal-button'); // Select the button
+//     var inputElement = document.getElementById("goalInput");
+//     var inputValue = inputElement.value;
+//     document.getElementById("displayArea").innerText = "The input number is: " + inputValue;
+// });
 
-setGoalButton.addEventListener('click', () => {
-    const goalValue = goalInput.value; // Get the value entered by the user
-
-//   fetchTotalAmount()
-//     .then(function(totalAmount) {
-//         if (!isNaN(goalValue)) {
-//             goalNum.innerHTML = `<p>${totalAmount}/${goalValue}</p>`; // Update the displayed goal with the entered value
-//             goalInput.value = ''; // Clear the input box
-//             var collectionGoalRef = db.collection("users").doc(userId).collection("your_collection");
-//           } else {
-//             alert('Please enter a valid number for your goal!'); // Alert the user if they enter something other than a number
-//           }
-//     })
-//     .catch(function(error) {
-//         console.error("Error fetching total amount:", error);
-//     });
-
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            console.log("User logged in (set goal portion)");
-            var userId = user.uid;
-            var docRef = db.collection("users").doc(userId).doc(currentGoal);
-
-            // Check if the document for the current goal exists
-            docRef.get()
-            .then(function(doc) {
-                if (doc.exists) {
-                    var currentValue = doc.data().currentGoal || 0;
-                    var updatedValue = goalValue;
-
-                    console.log("Existing value:", currentValue);
-                    console.log("New value:", updatedValue);
-
-                    // Update document data
-                    docRef.update({
-                        key: updatedValue
-                    })
-                    .then(function() {
-                        console.log("Document updated successfully");
-                        
-                        fetchGoal()
-                        .then(function(goal) {
-                            
-                        })
-                        .catch(function(error) {
-                            console.error("Error fetching goal:", error);
-                        });
-                    })
-                    .catch(function(error) {
-                        console.error("Error updating document: ", error);
-                    });
-                } else {
-                    // If the document doesn't exist, create a new one with the provided keyToAdd value
-                    docRef.set({
-                        currentGoal: goalValue
-                    })
-                    .then(function() {
-                        console.log("Document created successfully");
-
-                        fetchGoal()
-                        .then(function(goal) {
-                            
-                        })
-                        .catch(function(error) {
-                            console.error("Error fetching goal:", error);
-                        });
-                    })
-                    .catch(function(error) {
-                        console.error("Error creating document: ", error);
-                    });
-                }
-            })
-            .catch(function(error) {
-                console.error("Error getting document:", error);
-            });
+function fetchUserGoal() {
+    var user = firebase.auth().currentUser;
+    if (user) {
+        var userId = user.uid;
+        var userDoc = db.collection("users").doc(userId);
+        var doc = userDoc.get();
+        if (doc.exists) {
+            return doc.data().goal;
         } else {
-            console.log("No user signed in.");
+            console.error("User document not found");
+            return null;
         }
-    });
-
-    // Check if the user entered a number
-  
-});
+    } else {
+        console.error("No user signed in.");
+        return null;
+    }
+}
