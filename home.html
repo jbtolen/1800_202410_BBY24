@@ -16,13 +16,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <!-- Other libraries go here -->
 
     <!-- Link to styles of your own -->
@@ -36,7 +36,7 @@
 
     <div class="px-4 py-5 my-5 text-center ">
 
-        <h1 class="display-5 fw-bold text-body-emphasis">You drank a total of</h1>
+        <h1 class="display-5 fw-bold text-body-emphasis">You drank a total of </h1>
         <div class="col-lg-6 mx-auto">
             <p class="goalNum"></p>
 
@@ -57,7 +57,7 @@
 
                 <!-- goal div location can be changed if it looks like shit -->
             </div>
-
+                    <div class="plus-button" onclick="showPopup()">+</div>
             <div class="goal-div">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Enter Goal</span>
@@ -69,30 +69,63 @@
                 <h2 id="goalNum"></h2>
             </div>
         </div>
-        <br>
-
-    
     </div>
+
+
+    <div class="overlay" onclick="hidePopup()"></div>
+    <div class="popup" id="popup">
+        <!-- HTML -->
+        <div class="custom-input-container">
+            <label for="customAmountInput">Enter custom amount:</label>
+            <input type="number" id="customAmountInput">
+            <div class="button-container">
+                <button onclick="hidePopup()">Cancel</button>
+                <button onclick="addCustomAmount()" class="add-button">Add</button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+    <input type="number" id="goalInput">
+
+    <!-- <fieldset class="mb-3" id="personalInfoFields" disabled>
+
+
+    </fieldset>
+    <div class="d-flex justify-content-end mt-5">
+        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
+        <span style="width: 10px"></span>
+        <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+    </div> -->
 
 
 
     <!-- <nav id="navbar"></nav> -->
     <footer class="navbar justify-content-evenly bg-primary fixed-bottom" style="height: 80px;">
         <a href="history.html">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
-                </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-graph-up-arrow"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
+            </svg>
         </a>
         <a href="home.html">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-house" viewBox="0 0 16 16">
-                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
-                </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-house"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+            </svg>
         </a>
         <a href="profile.html">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-person-circle"
+                viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+            </svg>
         </a>
     </footer>
 
@@ -100,8 +133,8 @@
     <!------------------------------>
     <!-- Stuff for body goes here -->
 
-    
-    
+
+
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
@@ -109,6 +142,8 @@
     <script src="./scripts/firebaseAPI_TEAM24.js"></script>
     <script src="./scripts/main.js"></script>
     <script src="./scripts/webpage.js"></script>
+    <!-- <script src="./scripts/goal.js"></script> -->
+
     <!-- <script src="./scripts/authentication.js"></script> -->
 
     <!-- Link to scripts of your own -->
