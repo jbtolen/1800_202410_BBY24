@@ -1,4 +1,4 @@
 function loadWebpage(){
-    console.log($('#navbar').load('./text/navbar.html'));
+    console.log($('#footerPlaceholder').load('./text/navbar.html'));
 }
 loadWebpage();
