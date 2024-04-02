@@ -66,7 +66,7 @@ function createChart(xValues, yValues) {
         data: {
             labels: xValues,
             datasets: [{
-                label: 'Amount',
+                label: 'Amount (oz)',
                 backgroundColor: barColors,
                 data: yValues,
                 categorySpacing: 1,
