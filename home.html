@@ -31,8 +31,92 @@
 </head>
 
 <body>
+    <!--BUBBLE BACKGROUND-->
 
+    <div class = "bubble-container">
+        <div class = "bubbles">
+            <span style = "--i:11;"></span>
+            <span style = "--i:12;"></span>
+            <span style = "--i:24;"></span>
+            <span style = "--i:10;"></span>
+            <span style = "--i:14;"></span>
+            <span style = "--i:23;"></span>
+            <span style = "--i:18;"></span>
+          
+            <span style = "--i:26;"></span>
+            <span style = "--i:17;"></span>
+            <span style = "--i:13;"></span>
+           
+            <span style = "--i:16;"></span>
+            <span style = "--i:19;"></span>
+            <span style = "--i:20;"></span>
+            <span style = "--i:22;"></span>
+            <span style = "--i:25;"></span>
+            <span style = "--i:18;"></span>
+            <span style = "--i:21;"></span>
+         
+            <span style = "--i:13;"></span>
+            <span style = "--i:11;"></span>
+            <span style = "--i:12;"></span>
+            <span style = "--i:24;"></span>
+            <span style = "--i:10;"></span>
+         
+            <span style = "--i:18;"></span>
+          
+            <span style = "--i:22;"></span>
+            <span style = "--i:25;"></span>
+            <span style = "--i:18;"></span>
+         
+            <span style = "--i:13;"></span>
+            <span style = "--i:11;"></span>
+            <span style = "--i:12;"></span>
+            <span style = "--i:24;"></span>
+            <span style = "--i:10;"></span>
+            <span style = "--i:14;"></span>
+            <span style = "--i:23;"></span>
+            <span style = "--i:18;"></span>
+       
+            <span style = "--i:25;"></span>
+            <span style = "--i:18;"></span>
+            <span style = "--i:21;"></span>
+            <span style = "--i:15;"></span>
+            <span style = "--i:13;"></span>
+          
+            <span style = "--i:12;"></span>
+            <span style = "--i:24;"></span>
+          
+            <span style = "--i:19;"></span>
+            <span style = "--i:12;"></span>
+            <span style = "--i:24;"></span>
+          
+            <span style = "--i:19;"></span>
+            <span style = "--i:20;"></span>
+            <span style = "--i:22;"></span>
+            <span style = "--i:20;"></span>
+            <span style = "--i:22;"></span>
+            
+            <span style = "--i:25;"></span>
+        
+            <span style = "--i:17;"></span>
+            <span style = "--i:13;"></span>
 
+            <span style = "--i:22;"></span>
+            <span style = "--i:20;"></span>
+            <span style = "--i:19;"></span>
+            <span style = "--i:20;"></span>
+            <span style = "--i:22;"></span>
+            <span style = "--i:25;"></span>
+            <span style = "--i:18;"></span>
+            <span style = "--i:22;"></span>
+            <span style = "--i:20;"></span>
+            <span style = "--i:22;"></span>
+            <span style = "--i:25;"></span>
+        </div>
+    </div>
+
+    <div class = "bubble-background"></div>
+
+    <!--BUBBLE BACKGROUND-->
 
     <div class="px-4 py-5 my-5 text-center ">
 
@@ -53,12 +137,24 @@
                     <button type="button" class="btn btn-primary" id="amount2">Add 22oz</button>
                     <button type="button" class="btn btn-primary" id="amount3">Add 32oz</button>
                     <button type="button" class="btn btn-primary" id="reset">Reset</button>
-                    <div class="plus-button" onclick="showPopup()">+</div>
                 </div>
+
+                <!-- goal div location can be changed if it looks like shit -->
+            </div>
+                    <div class="plus-button" onclick="showPopup()">+</div>
+            <div class="goal-div">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Enter Goal</span>
+                    <input type="text" class="form-control" placeholder="Goal" aria-label="Goal" aria-describedby="basic-addon1">
+                </div>
+
+                <button type="button" class="btn btn-danger" id="set-goal-button">Set Goal</button>
+
+                <h2 id="goalNum"></h2>
             </div>
         </div>
     </div>
-
+    
 
     <div class="overlay" onclick="hidePopup()"></div>
     <div class="popup" id="popup">

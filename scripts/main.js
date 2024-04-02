@@ -273,3 +273,4 @@ function addCustomAmount() {
         alert('Please enter a valid number for the custom amount.');
     }
 }
+
