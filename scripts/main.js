@@ -158,7 +158,34 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 }
 
-function fetchGoal() {
+// function fetchGoal() {
+//     return new Promise(function(resolve, reject) {
+
+//         firebase.auth().onAuthStateChanged(function(user) {
+//             if (user) {
+//                 var userId = user.uid;
+//                 var collectionRef = db.collection("users").doc(userId).collection("your_collection");
+
+//                 collectionRef.get()
+//                 .then(function(querySnapshot) {
+//                     var totalAmount = 0;
+//                     querySnapshot.forEach(function(doc) {
+//                         // Sum up the values of all documents
+//                         totalAmount += doc.data().key;
+//                     });
+//                     resolve(totalAmount);
+//                 })
+//                 .catch(function(error) {
+//                     reject(error);
+//                 });
+//             } else {
+//                 reject("No user signed in.");
+//             }
+//         });
+//     });
+// }
+
+function fetchTotalAmount() {
     return new Promise(function(resolve, reject) {
 
         firebase.auth().onAuthStateChanged(function(user) {
@@ -171,34 +198,10 @@ function fetchGoal() {
                     var totalAmount = 0;
                     querySnapshot.forEach(function(doc) {
                         // Sum up the values of all documents
-                        totalAmount += doc.data().key;
-                    });
-                    resolve(totalAmount);
-                })
-                .catch(function(error) {
-                    reject(error);
-                });
-            } else {
-                reject("No user signed in.");
-            }
-        });
-    });
-}
-
-function fetchTotalAmount() {
-    return (function(resolve, reject) {
-
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                var userId = user.uid;
-                var collectionRef = db.collection("users").doc(userId).collection("your_collection");
-
-                collectionRef.get()
-                .then(function(querySnapshot) {
-                    var totalAmount = 0;
-                    querySnapshot.forEach(function(doc) {
-                        // Sum up the values of all documents
-                        totalAmount += doc.data().key;
+                        var key = doc.data().key;
+                        if (!isNaN(key)) {
+                            totalAmount += key;
+                        }
                     });
                     resolve(totalAmount);
                 })
@@ -234,7 +237,9 @@ function fetchUserGoal() {
         var userDoc = db.collection("users").doc(userId);
         var doc = userDoc.get();
         if (doc.exists) {
+            console.log("returning from fetchUserGoal() -> " + doc.data().goal);
             return doc.data().goal;
+            
         } else {
             console.error("User document not found");
             return null;
@@ -244,3 +249,11 @@ function fetchUserGoal() {
         return null;
     }
 }
+
+document.getElementById("set-goal-button").addEventListener("click", function() {
+    if(fetchUserGoal()){
+        console.log("goal exists: " + fetchUserGoal());
+    }else{
+        console.log("goal doesnt exist: " + fetchUserGoal());
+    }
+});
