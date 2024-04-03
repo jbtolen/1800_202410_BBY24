@@ -171,18 +171,16 @@ function fetchTotalAmount() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             var userId = user.uid;
-            var collectionRef = db.collection("users").doc(userId).collection("your_collection");
+            var currentDate = new Date().toISOString().split('T')[0]; // Get current date
+            var collectionRef = db.collection("users").doc(userId).collection("your_collection").doc(currentDate); // Reference to document for current date
 
             collectionRef.get()
-                .then(function (querySnapshot) {
-                    var totalAmount = 0;
-                    querySnapshot.forEach(function (doc) {
-                        totalAmount += parseInt(doc.data().key || 0);
-                    });
-                    updateTotalAmountDisplay(totalAmount);
+                .then(function (doc) {
+                    var currentValue = doc.exists ? parseInt(doc.data().key || 0) : 0; // Get current value for current date
+                    updateTotalAmountDisplay(currentValue); // Update total amount display with current value
                 })
                 .catch(function (error) {
-                    console.error("Error getting documents: ", error);
+                    console.error("Error getting document:", error);
                 });
         } else {
             console.log("No user signed in.");
@@ -194,13 +192,7 @@ function fetchTotalAmount() {
 function updateTotalAmountDisplay(currentValue) {
     var userGoal = parseInt(document.getElementById('goalInput').value);
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-<<<<<<< HEAD
-
-
-    var message = (currentValue === 0) ? `You drank a total of 0/${userGoal}oz` : `You drank a total of ${currentValue}/${userGoal}oz`;
-=======
     var message = (currentValue === 0) ? `You drank a total of 0/${userGoal}oz` : `You drank a total of ${currentValue}/${userGoal}L`;
->>>>>>> fe5302b881b82523117185cdfc2b0006b362cd77
     if (totalAmountDisplay) {
         totalAmountDisplay.textContent = message;
     } else {
