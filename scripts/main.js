@@ -204,8 +204,6 @@ function updateTotalAmountDisplay(currentValue) {
 }
 
 
-
-
 //call the function to run it 
 function editUserInfo() {
     //Enable the form fields
@@ -274,4 +272,3 @@ function addCustomAmount() {
         alert('Please enter a valid number for the custom amount.');
     }
 }
-

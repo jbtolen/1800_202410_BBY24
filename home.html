@@ -33,6 +33,98 @@
 <body>
     <!--BUBBLE BACKGROUND-->
 
+
+
+    <!--BUBBLE BACKGROUND-->
+    <div class="center-screen">
+
+    <div class="px-4 py-5 my-5 text-center ">
+
+        <h1 class="display-5 fw-bold text-body-emphasis">You drank a total of </h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="goalNum"></p>
+
+        </div>
+
+        <div class="col-lg-6 mx-auto">
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <div class="dropdown">
+
+                    <button type="button" class="btn btn-primary" id="amount1">Add 14oz</button>
+                    <button type="button" class="btn btn-primary" id="amount2">Add 22oz</button>
+                    <button type="button" class="btn btn-primary" id="amount3">Add 32oz</button>
+                    <button type="button" class="btn btn-primary" id="reset">Reset</button>
+                </div>
+
+            </div>
+                    <div class="plus-button" onclick="showPopup()">+</div>
+
+        </div>
+    </div>
+    </div>
+    
+
+    <div class="overlay" onclick="hidePopup()"></div>
+    <div class="popup bg-primary text-white" id="popup"> <!-- Apply bg-primary for background color and text-white for text color -->
+        <!-- HTML -->
+        <div class="custom-input-container">
+            <label for="customAmountInput" class="title">Enter custom amount:</label> <!-- Apply text-white for text color -->
+            <input type="number" id="customAmountInput">
+            <div class="button-container text-center"> <!-- Apply text-center class here -->
+                <button onclick="hidePopup()" class="btn btn-primary">Cancel</button>
+                <button onclick="addCustomAmount()" class="btn btn-primary add-button">Add</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+    <input type="number" id="goalInput">
+
+    <!-- <fieldset class="mb-3" id="personalInfoFields" disabled>
+
+
+    </fieldset>
+    <div class="d-flex justify-content-end mt-5">
+        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
+        <span style="width: 10px"></span>
+        <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+    </div> -->
+
+
+
+    <!-- <nav id="navbar"></nav> -->
+    <footer class="navbar justify-content-evenly fixed-bottom" style="height: 80px;">
+        <a href="history.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-graph-up-arrow"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
+            </svg>
+        </a>
+        <a href="home.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-house"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+            </svg>
+        </a>
+        <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-person-circle"
+                viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+            </svg>
+        </a>
+        <a href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+              </svg>
+        </a>
+    </footer>
     <div class = "bubble-container">
         <div class = "bubbles">
             <span style = "--i:11;"></span>
@@ -115,109 +207,6 @@
     </div>
 
     <div class = "bubble-background"></div>
-
-    <!--BUBBLE BACKGROUND-->
-
-    <div class="px-4 py-5 my-5 text-center ">
-
-        <h1 class="display-5 fw-bold text-body-emphasis">You drank a total of </h1>
-        <div class="col-lg-6 mx-auto">
-            <p class="goalNum"></p>
-
-        </div>
-
-        <div class="col-lg-6 mx-auto">
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <div class="dropdown">
-                    <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Add Water
-                    </button> -->
-                    <button type="button" class="btn btn-primary" id="amount1">Add 14oz</button>
-                    <button type="button" class="btn btn-primary" id="amount2">Add 22oz</button>
-                    <button type="button" class="btn btn-primary" id="amount3">Add 32oz</button>
-                    <button type="button" class="btn btn-primary" id="reset">Reset</button>
-                </div>
-
-                <!-- goal div location can be changed if it looks like shit -->
-            </div>
-                    <div class="plus-button" onclick="showPopup()">+</div>
-            <!-- <div class="goal-div">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Enter Goal</span>
-                    <input type="text" class="form-control" placeholder="Goal" aria-label="Goal" aria-describedby="basic-addon1">
-                </div>
-
-                <button type="button" class="btn btn-danger" id="set-goal-button">Set Goal</button>
-
-                <h2 id="goalNum"></h2>
-            </div> -->
-        </div>
-    </div>
-    
-
-    <div class="overlay" onclick="hidePopup()"></div>
-    <div class="popup" id="popup">
-        <!-- HTML -->
-        <div class="custom-input-container">
-            <label for="customAmountInput">Enter custom amount:</label>
-            <input type="number" id="customAmountInput">
-            <div class="button-container">
-                <button onclick="hidePopup()">Cancel</button>
-                <button onclick="addCustomAmount()" class="add-button">Add</button>
-
-            </div>
-        </div>
-
-    </div>
-
-
-    </div>
-    <input type="number" id="goalInput">
-
-    <!-- <fieldset class="mb-3" id="personalInfoFields" disabled>
-
-
-    </fieldset>
-    <div class="d-flex justify-content-end mt-5">
-        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-        <span style="width: 10px"></span>
-        <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
-    </div> -->
-
-
-
-    <!-- <nav id="navbar"></nav> -->
-    <footer class="navbar justify-content-evenly bg-primary fixed-bottom" style="height: 80px;">
-        <a href="history.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-graph-up-arrow"
-                viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
-            </svg>
-        </a>
-        <a href="home.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-house"
-                viewBox="0 0 16 16">
-                <path
-                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-            </svg>
-        </a>
-        <a href="profile.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-person-circle"
-                viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                <path fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-            </svg>
-        </a>
-        <a href="index.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-              </svg>
-        </a>
-    </footer>
 
     <!-- Your HTML Layout go here -->
     <!------------------------------>
