@@ -192,14 +192,9 @@ function fetchTotalAmount() {
 function updateTotalAmountDisplay(currentValue) {
     var userGoal = parseInt(document.getElementById('goalInput').value);
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-<<<<<<< HEAD
     var message = (currentValue === 0) ? `You drank a total of 0/${userGoal}oz` : `You drank a total of ${currentValue}/${userGoal}L`;
-=======
-    var message1 = (currentValue === 0) ? `You drank a total of 0L.` : `You drank a total of ${currentValue}L.`;
-    var message2 = `Your goal is ${userGoal}L`
->>>>>>> 6df958358ddd3fde0cdc31a43b1e49015e1da7b0
     if (totalAmountDisplay) {
-        totalAmountDisplay.textContent = message1 + " " + message2;
+        totalAmountDisplay.textContent = message;
     } else {
         console.error("Total amount display element not found.");
     }

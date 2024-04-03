@@ -4,19 +4,6 @@
     align-items: center;
     height: 100vh;
 }
-.content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;  
-}
-
-.index-content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 
 .plus-button {
     background-color: #007bff;
