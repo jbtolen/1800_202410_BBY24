@@ -270,3 +270,18 @@ function addCustomAmount() {
         alert('Please enter a valid number for the custom amount.');
     }
 }
+
+function getName() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            var userName = user.displayName;
+
+            document.getElementById("name-goes-here").innerText = userName;
+        } else {
+
+            console.log("No user is logged in");
+        }
+    });
+}
+
+getName();
