@@ -19,7 +19,7 @@ function populateUserInfo() {
                                 document.getElementById("nameInput").value = userName;
                             }
                             if (userGoal != null) {
-                                document.getElementById("goalInput").value = userGoal;
+                                document.getElementById("goal").value = userGoal;
                             }
                             if (userCity != null) {
                                 document.getElementById("cityInput").value = userCity;
@@ -42,12 +42,14 @@ function editUserInfo() {
 
  function saveUserInfo() {
     
-    userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
+    userName = document.getElementById('nameInput').value;    
+    userGoal = document.getElementById('goal').value;       //get the value of the field with id="cityInput"
     userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput"
 
     currentUser.update({
         name: userName,
-        city: userCity
+        goal: userGoal,
+        city: userCity,
     })
     .then(() => {
         console.log("Document successfully updated!");
