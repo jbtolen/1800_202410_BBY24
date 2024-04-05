@@ -192,10 +192,10 @@ function fetchTotalAmount() {
 function updateTotalAmountDisplay(currentValue) {
     var userGoal = parseInt(document.getElementById('goalInput').value);
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
-    var message1 = (currentValue === 0) ? `You drank a total of 0L.` : `You drank a total of ${currentValue}L.`;
-    var message2 = `Your goal is ${userGoal}L`
+    var message1 = (currentValue === 0) ? `You drank a total of 0mL.` : `You drank a total of ${currentValue}mL.`;
+    var message2 = `Your goal is ${userGoal}mL`
     if (totalAmountDisplay) {
-        totalAmountDisplay.textContent = message1 + message2;
+        totalAmountDisplay.textContent = message1 + " " + message2;
     } else {
         console.error("Total amount display element not found.");
     }
@@ -270,18 +270,3 @@ function addCustomAmount() {
         alert('Please enter a valid number for the custom amount.');
     }
 }
-
-function getName() {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            var userName = user.displayName;
-
-            document.getElementById("name-goes-here").innerText = userName;
-        } else {
-
-            console.log("No user is logged in");
-        }
-    });
-}
-
-getName();
