@@ -40,13 +40,11 @@ function editUserInfo() {
  function saveUserInfo() {
     
     userName = document.getElementById('nameInput').value;    
-    userGoal = document.getElementById('goal').value;       //get the value of the field with id="cityInput"
-    userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput"
+    userGoal = document.getElementById('goal').value;      
 
     currentUser.update({
         name: userName,
         goal: userGoal,
-        city: userCity,
     })
     .then(() => {
         console.log("Document successfully updated!");
