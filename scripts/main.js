@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    //Check if user logged in
-    firebase.auth().onAuthStateChanged(function (user){
+    // Check if the user is logged in
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+            // Check if the user's goal exists
             checkUserGoal(user);
-        }
-        else{
+        } else {
             console.log("No user signed in.");
         }
     });
@@ -106,8 +106,8 @@ function checkUserGoal(user) {
                 populateUserGoal();
                 updateCollection(0);
             } else {
-                // User's goal doesn't exist, prompt for input
-                promptUserGoal(userRef);
+                // User's goal doesn't exist, show popup
+                showGoalPopup();
             }
         } else {
             console.log("No such document!");
@@ -117,8 +117,8 @@ function checkUserGoal(user) {
     });
 }
 
-//Function to prompt user to input their goal
-function showGoalPopup(){
+// Function to prompt the user to input their goal
+function showGoalPopup() {
     document.getElementById('goalPopup').style.display = 'block';
 }
 
@@ -156,7 +156,6 @@ function saveUserGoal(userRef, goal) {
 function hideGoalPopup() {
     document.getElementById('goalPopup').style.display = 'none';
 }
-
 // Populate user's goal
 function populateUserGoal() {
     firebase.auth().onAuthStateChanged(user => {
@@ -166,7 +165,7 @@ function populateUserGoal() {
                 .then(function (userDoc) {
                     var userGoal = userDoc.data()?.goal;
                     if (userGoal != null) {
-                        document.getElementById("goalInput").value = userGoal;
+                        document.getElementById("goalPopupInput").value = userGoal;
                     }
                     fetchTotalAmount();
                 })
@@ -202,7 +201,7 @@ function fetchTotalAmount() {
 
 // Update total amount display
 function updateTotalAmountDisplay(currentValue) {
-    var userGoal = parseInt(document.getElementById('goalInput').value);
+    var userGoal = parseInt(document.getElementById('goalPopupInput').value);
     var totalAmountDisplay = document.querySelector('.display-5.fw-bold.text-body-emphasis');
     var message1 = (currentValue === 0) ? `You drank a total of 0mL.` : `You drank a total of ${currentValue}mL.`;
     var message2 = `Your goal is ${userGoal}mL`
@@ -213,15 +212,14 @@ function updateTotalAmountDisplay(currentValue) {
     }
 }
 
-// Function to add custom amount
+// Function to show popup with input field for custom amount
 function showPopup() {
+    // Display the popup and overlay
     document.getElementById('popup').style.display = 'block';
     document.querySelector('.overlay').style.display = 'block';
-}
 
-function hidePopup() {
-    document.getElementById('popup').style.display = 'none';
-    document.querySelector('.overlay').style.display = 'none';
+    // Clear any previous input value
+    document.getElementById('customAmountInput').value = '';
 }
 
 // Function to add custom amount to the collection
@@ -255,3 +253,9 @@ function getName() {
 }
 
 getName();
+
+function hidePopup() {
+    // Hide the popup and overlay
+    document.getElementById('popup').style.display = 'none';
+    document.querySelector('.overlay').style.display = 'none';
+}
