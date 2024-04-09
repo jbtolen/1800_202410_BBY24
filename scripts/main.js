@@ -18,6 +18,16 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("button", index + 1, "clicked");
         });
     });
+
+    //Check if user logged in
+    firebase.auth().onAuthStateChanged(function (user){
+        if (user) {
+            checkUserGoal(user);
+        }
+        else{
+            console.log("No user signed in.");
+        }
+    });
 });
 
 // Update collection based on buttons or customer amount
@@ -81,19 +91,6 @@ function updateCollection(option) {
     });
 }
 
-// Wait for the DOM content to be fully loaded
-document.addEventListener("DOMContentLoaded", function () {
-    // Check if the user is logged in
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // Check if the user's goal exists
-            checkUserGoal(user);
-        } else {
-            console.log("No user signed in.");
-        }
-    });
-});
-
 // Function to check if the user's goal exists
 function checkUserGoal(user) {
     var userId = user.uid;
@@ -120,18 +117,28 @@ function checkUserGoal(user) {
     });
 }
 
-// Function to prompt the user to input their goal
-function promptUserGoal(userRef) {
-    var goalInput = prompt("Please enter your goal:");
+//Function to prompt user to input their goal
+function showGoalPopup(){
+    document.getElementById('goalPopup').style.display = 'block';
+}
 
-    if (goalInput !== null && goalInput.trim() !== "") {
-        // Save the goal to the database
-        saveUserGoal(userRef, goalInput.trim());
+// Function to handle adding the goal
+function addGoal() {
+    var goalInput = document.getElementById('goalPopupInput').value;
+    if (goalInput.trim() !== '') {
+        var user = firebase.auth().currentUser;
+        if (user) {
+            var userId = user.uid;
+            var userRef = db.collection("users").doc(userId);
+            saveUserGoal(userRef, goalInput.trim());
+        }
+        hideGoalPopup();
     } else {
-        console.log("Goal input is empty or canceled.");
+        alert('Please enter a valid goal number.');
     }
 }
 
+// Function to save the user's goal to the database
 function saveUserGoal(userRef, goal) {
     userRef.update({
         goal: goal
@@ -143,6 +150,11 @@ function saveUserGoal(userRef, goal) {
     }).catch(function (error) {
         console.error("Error updating document:", error);
     });
+}
+
+// Function to hide the goal popup
+function hideGoalPopup() {
+    document.getElementById('goalPopup').style.display = 'none';
 }
 
 // Populate user's goal
@@ -201,38 +213,6 @@ function updateTotalAmountDisplay(currentValue) {
     }
 }
 
-
-//call the function to run it 
-function editUserInfo() {
-    //Enable the form fields
-    document.getElementById('personalInfoFields').disabled = false;
-}
-
-function saveUserInfo() {
-    var userGoal = parseInt(document.getElementById('goalInput').value); // Get the user's goal from the input field
-    console.log("User Goal:", userGoal); // Logging userGoal value
-
-    var user = firebase.auth().currentUser; // Fetch the current user
-
-    if (user) {
-        var currentUser = db.collection("users").doc(user.uid);
-
-        currentUser.update({
-            goal: userGoal
-        })
-            .then(function () {
-                console.log("Document successfully updated with user goal:", userGoal);
-                populateUserGoal(); // Update the displayed user goal after saving
-                // Disable the form fields after saving
-                document.getElementById('personalInfoFields').disabled = true;
-            })
-            .catch(function (error) {
-                console.error("Error updating document:", error);
-            });
-    } else {
-        console.log("No user signed in.");
-    }
-}
 // Function to add custom amount
 function showPopup() {
     document.getElementById('popup').style.display = 'block';
@@ -242,16 +222,6 @@ function showPopup() {
 function hidePopup() {
     document.getElementById('popup').style.display = 'none';
     document.querySelector('.overlay').style.display = 'none';
-}
-
-// Function to show popup with input field for custom amount
-function showPopup() {
-    // Display the popup and overlay
-    document.getElementById('popup').style.display = 'block';
-    document.querySelector('.overlay').style.display = 'block';
-
-    // Clear any previous input value
-    document.getElementById('customAmountInput').value = '';
 }
 
 // Function to add custom amount to the collection
