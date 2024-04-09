@@ -21,9 +21,6 @@ function populateUserInfo() {
                             if (userGoal != null) {
                                 document.getElementById("goal").value = userGoal;
                             }
-                            if (userCity != null) {
-                                document.getElementById("cityInput").value = userCity;
-                            }
                         })
                 } else {
                     // No user is signed in.
