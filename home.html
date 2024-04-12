@@ -31,15 +31,16 @@
 </head>
 
 <body>
+    <!-- Welcome/Goal Popup -->
     <div id="goalPopup" class="popup bg-primary text-white">
         <div class="popup-content">
             <h1 class="display-4">Welcome to Drank!</h1>
 
             <div class="styleGoal mb-3">
                 <h3 class="text-white">Start by setting a daily goal for yourself!</h2>
-                        <input type="number" id="goalPopupInput" class="form-control"
-                            placeholder="Enter your goal number" min="0" required>
-                            <h3 class="text-white">You will be able to change this in the profile settings</h3>
+                    <input type="number" id="goalPopupInput" class="form-control" placeholder="Enter your goal number"
+                        min="0" required>
+                    <h3 class="text-white">You will be able to change this in the profile settings</h3>
             </div>
 
             <div class="button-container text-center">
@@ -48,13 +49,8 @@
             </div>
         </div>
     </div>
-    <!--BUBBLE BACKGROUND-->
 
-
-
-    <!--BUBBLE BACKGROUND-->
-    <div class="center-screen">
-
+    <!-- MVP display with total amount, goal, presets, and customer amount -->
     <div class="px-4 py-5 my-5 text-center ">
         <h1 class="display-4">Welcome, <span id="name-goes-here"></span></h1>
 
@@ -76,18 +72,20 @@
                 </div>
 
             </div>
-                    <div class="plus-button" onclick="showPopup()">+</div>
+            <div class="plus-button" onclick="showPopup()">+</div>
 
         </div>
     </div>
     </div>
-    
 
+    <!-- Customer amount Popup -->
     <div class="overlay" onclick="hidePopup()"></div>
-    <div class="popup bg-primary text-white" id="popup"> <!-- Apply bg-primary for background color and text-white for text color -->
+    <div class="popup bg-primary text-white" id="popup">
+        <!-- Apply bg-primary for background color and text-white for text color -->
         <!-- HTML -->
         <div class="custom-input-container">
-            <label for="customAmountInput" class="title">Enter custom amount:</label> <!-- Apply text-white for text color -->
+            <label for="customAmountInput" class="title">Enter custom amount:</label>
+            <!-- Apply text-white for text color -->
             <input type="number" id="customAmountInput">
             <div class="button-container text-center"> <!-- Apply text-center class here -->
                 <button onclick="hidePopup()" class="btn btn-primary">Cancel</button>
@@ -105,7 +103,7 @@
 
 
 
-    <!-- <nav id="navbar"></nav> -->
+    <!-- Footer -->
     <footer class="navbar justify-content-evenly bg-primary fixed-bottom" style="height: 80px;">
         <a href="history.html">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-graph-up-arrow"
@@ -130,94 +128,97 @@
             </svg>
         </a>
         <a href="index.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-box-arrow-right"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                <path fill-rule="evenodd"
+                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+            </svg>
         </a>
     </footer>
-    <div class = "bubble-container">
-        <div class = "bubbles">
-            <span style = "--i:11;"></span>
-            <span style = "--i:12;"></span>
-            <span style = "--i:24;"></span>
-            <span style = "--i:10;"></span>
-            <span style = "--i:14;"></span>
-            <span style = "--i:23;"></span>
-            <span style = "--i:18;"></span>
-          
-            <span style = "--i:26;"></span>
-            <span style = "--i:17;"></span>
-            <span style = "--i:13;"></span>
-           
-            <span style = "--i:16;"></span>
-            <span style = "--i:19;"></span>
-            <span style = "--i:20;"></span>
-            <span style = "--i:22;"></span>
-            <span style = "--i:25;"></span>
-            <span style = "--i:18;"></span>
-            <span style = "--i:21;"></span>
-         
-            <span style = "--i:13;"></span>
-            <span style = "--i:11;"></span>
-            <span style = "--i:12;"></span>
-            <span style = "--i:24;"></span>
-            <span style = "--i:10;"></span>
-         
-            <span style = "--i:18;"></span>
-          
-            <span style = "--i:22;"></span>
-            <span style = "--i:25;"></span>
-            <span style = "--i:18;"></span>
-         
-            <span style = "--i:13;"></span>
-            <span style = "--i:11;"></span>
-            <span style = "--i:12;"></span>
-            <span style = "--i:24;"></span>
-            <span style = "--i:10;"></span>
-            <span style = "--i:14;"></span>
-            <span style = "--i:23;"></span>
-            <span style = "--i:18;"></span>
-       
-            <span style = "--i:25;"></span>
-            <span style = "--i:18;"></span>
-            <span style = "--i:21;"></span>
-            <span style = "--i:15;"></span>
-            <span style = "--i:13;"></span>
-          
-            <span style = "--i:12;"></span>
-            <span style = "--i:24;"></span>
-          
-            <span style = "--i:19;"></span>
-            <span style = "--i:12;"></span>
-            <span style = "--i:24;"></span>
-          
-            <span style = "--i:19;"></span>
-            <span style = "--i:20;"></span>
-            <span style = "--i:22;"></span>
-            <span style = "--i:20;"></span>
-            <span style = "--i:22;"></span>
-            
-            <span style = "--i:25;"></span>
-        
-            <span style = "--i:17;"></span>
-            <span style = "--i:13;"></span>
+    <div class="bubble-container">
+        <div class="bubbles">
+            <span style="--i:11;"></span>
+            <span style="--i:12;"></span>
+            <span style="--i:24;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:14;"></span>
+            <span style="--i:23;"></span>
+            <span style="--i:18;"></span>
 
-            <span style = "--i:22;"></span>
-            <span style = "--i:20;"></span>
-            <span style = "--i:19;"></span>
-            <span style = "--i:20;"></span>
-            <span style = "--i:22;"></span>
-            <span style = "--i:25;"></span>
-            <span style = "--i:18;"></span>
-            <span style = "--i:22;"></span>
-            <span style = "--i:20;"></span>
-            <span style = "--i:22;"></span>
-            <span style = "--i:25;"></span>
+            <span style="--i:26;"></span>
+            <span style="--i:17;"></span>
+            <span style="--i:13;"></span>
+
+            <span style="--i:16;"></span>
+            <span style="--i:19;"></span>
+            <span style="--i:20;"></span>
+            <span style="--i:22;"></span>
+            <span style="--i:25;"></span>
+            <span style="--i:18;"></span>
+            <span style="--i:21;"></span>
+
+            <span style="--i:13;"></span>
+            <span style="--i:11;"></span>
+            <span style="--i:12;"></span>
+            <span style="--i:24;"></span>
+            <span style="--i:10;"></span>
+
+            <span style="--i:18;"></span>
+
+            <span style="--i:22;"></span>
+            <span style="--i:25;"></span>
+            <span style="--i:18;"></span>
+
+            <span style="--i:13;"></span>
+            <span style="--i:11;"></span>
+            <span style="--i:12;"></span>
+            <span style="--i:24;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:14;"></span>
+            <span style="--i:23;"></span>
+            <span style="--i:18;"></span>
+
+            <span style="--i:25;"></span>
+            <span style="--i:18;"></span>
+            <span style="--i:21;"></span>
+            <span style="--i:15;"></span>
+            <span style="--i:13;"></span>
+
+            <span style="--i:12;"></span>
+            <span style="--i:24;"></span>
+
+            <span style="--i:19;"></span>
+            <span style="--i:12;"></span>
+            <span style="--i:24;"></span>
+
+            <span style="--i:19;"></span>
+            <span style="--i:20;"></span>
+            <span style="--i:22;"></span>
+            <span style="--i:20;"></span>
+            <span style="--i:22;"></span>
+
+            <span style="--i:25;"></span>
+
+            <span style="--i:17;"></span>
+            <span style="--i:13;"></span>
+
+            <span style="--i:22;"></span>
+            <span style="--i:20;"></span>
+            <span style="--i:19;"></span>
+            <span style="--i:20;"></span>
+            <span style="--i:22;"></span>
+            <span style="--i:25;"></span>
+            <span style="--i:18;"></span>
+            <span style="--i:22;"></span>
+            <span style="--i:20;"></span>
+            <span style="--i:22;"></span>
+            <span style="--i:25;"></span>
         </div>
     </div>
 
-    <div class = "bubble-background"></div>
+    <div class="bubble-background"></div>
 
     <!-- Your HTML Layout go here -->
     <!------------------------------>

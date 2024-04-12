@@ -17,7 +17,7 @@ function getChartData() {
             var yValues = [];
 
             collectionRef.get().then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) { 
+                querySnapshot.forEach(function (doc) {
                     var date = doc.id; // Assuming the document ID is the date
                     var amount = doc.data().key || 0;
                     xValues.push(date);
@@ -32,8 +32,8 @@ function getChartData() {
         }
     });
 }
- 
 
+// Function to create the chart using the xValues and yValues
 function createChart(xValues, yValues) {
     var myChart = new Chart(document.getElementById('historyGraph').getContext('2d'), {
         type: 'bar',
@@ -49,22 +49,22 @@ function createChart(xValues, yValues) {
             }]
         },
         options: {
-            plugins:{
-                legend:{
-                    labels:{
+            plugins: {
+                legend: {
+                    labels: {
                         color: "black",
                     },
                 },
             },
             scales: {
                 y: {
-                    ticks:{
+                    ticks: {
                         color: "black",
                         beginAtZero: true
                     }
                 },
                 x: {
-                    ticks:{
+                    ticks: {
                         color: "black"
                     }
                 },
