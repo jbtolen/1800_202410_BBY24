@@ -41,9 +41,9 @@
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    width: 300px; /* Adjust width as needed */
-    border-radius: 10px; /* Adjust border radius as needed */
-    padding: 20px; /* Adjust padding as needed */
+    width: 300px; 
+    border-radius: 10px; 
+    padding: 20px; 
 }
 
 .title{
@@ -67,7 +67,6 @@
     z-index: 999;
 }
 
-/* CSS */
 .custom-input-container {
     display: flex;
     flex-direction: column;
@@ -75,8 +74,8 @@
 
 .button-container {
     display: flex;
-    justify-content: center; /* Align buttons to the right */
-    margin-top: 10px; /* Adjust margin as needed */
+    justify-content: center; 
+    margin-top: 10px;
 }
 
 
@@ -163,7 +162,7 @@
 }
 
 .btn-primary {
-    font-size: 20px; /* Increase button font size */
+    font-size: 20px; 
     margin:5px;
 }
 
